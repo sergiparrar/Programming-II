@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.21005.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Product of two", "Product of two\Product of two.vcxproj", "{725F8B02-DB3A-4E11-AC67-45A48AE5A00D}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Smallest value", "Smallest value\Smallest value.vcxproj", "{BBC5223A-1E4E-43EA-92B0-3309D77EE094}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Integer menu", "Integer menu\Integer menu.vcxproj", "{A3C22EF9-025C-4784-B58B-2AAF8723614D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{725F8B02-DB3A-4E11-AC67-45A48AE5A00D}.Debug|Win32.ActiveCfg = Debug|Win32
+		{725F8B02-DB3A-4E11-AC67-45A48AE5A00D}.Debug|Win32.Build.0 = Debug|Win32
+		{725F8B02-DB3A-4E11-AC67-45A48AE5A00D}.Release|Win32.ActiveCfg = Release|Win32
+		{725F8B02-DB3A-4E11-AC67-45A48AE5A00D}.Release|Win32.Build.0 = Release|Win32
+		{BBC5223A-1E4E-43EA-92B0-3309D77EE094}.Debug|Win32.ActiveCfg = Debug|Win32
+		{BBC5223A-1E4E-43EA-92B0-3309D77EE094}.Debug|Win32.Build.0 = Debug|Win32
+		{BBC5223A-1E4E-43EA-92B0-3309D77EE094}.Release|Win32.ActiveCfg = Release|Win32
+		{BBC5223A-1E4E-43EA-92B0-3309D77EE094}.Release|Win32.Build.0 = Release|Win32
+		{A3C22EF9-025C-4784-B58B-2AAF8723614D}.Debug|Win32.ActiveCfg = Debug|Win32
+		{A3C22EF9-025C-4784-B58B-2AAF8723614D}.Debug|Win32.Build.0 = Debug|Win32
+		{A3C22EF9-025C-4784-B58B-2AAF8723614D}.Release|Win32.ActiveCfg = Release|Win32
+		{A3C22EF9-025C-4784-B58B-2AAF8723614D}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
