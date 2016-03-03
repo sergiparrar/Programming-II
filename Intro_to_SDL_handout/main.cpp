@@ -54,9 +54,11 @@ struct globals
 	int ship_x;
 	int ship_y;
 	SDL_Texture* shot;
+	SDL_Texture* missil;
 	projectile shots[NUM_SHOTS];
+	projectile mshots[NUM_SHOTS];
 	int last_shot;
-	bool fire, up, down, left, right;
+	bool missilfire, fire, up, down, left, right;
 	KEY_STATE* keyboard;
 	// TODO 4:
 	// Add pointers to store music and the laser fx
@@ -83,6 +85,7 @@ void Start()
 	g.background = SDL_CreateTextureFromSurface(g.renderer, IMG_Load("background.png"));
 	g.ship = SDL_CreateTextureFromSurface(g.renderer, IMG_Load("ship.png"));
 	g.shot = SDL_CreateTextureFromSurface(g.renderer, IMG_Load("shot.png"));
+	g.missil = SDL_CreateTextureFromSurface(g.renderer, IMG_Load("sprites.png"));
 	SDL_QueryTexture(g.background, NULL, NULL, &g.background_width, NULL);
 
 	// Create mixer --
@@ -105,7 +108,7 @@ void Start()
 	g.scroll = 0;
 	g.ship_x = 100;
 	g.ship_y = SCREEN_HEIGHT / 2;
-	g.fire = g.up = g.down = g.left = g.right = false;
+	g.missilfire = g.fire = g.up = g.down = g.left = g.right = false;
 	g.last_shot = 0;
 	g.keyboard = (KEY_STATE*)malloc(sizeof(KEY_STATE) * MAX_KEYS);
 	memset(g.keyboard, KEY_IDLE, MAX_KEYS);
@@ -156,6 +159,7 @@ bool CheckInput()
 	g.left = g.keyboard[SDL_SCANCODE_LEFT] == KEY_REPEAT;
 	g.right = g.keyboard[SDL_SCANCODE_RIGHT] == KEY_REPEAT;
 	g.fire = g.keyboard[SDL_SCANCODE_SPACE] == KEY_DOWN;
+	g.missilfire = g.keyboard[SDL_SCANCODE_LCTRL] == KEY_DOWN;
 
 	return true;
 }
@@ -177,9 +181,9 @@ void MoveStuff()
 	}
 	while (g.down){
 		g.down = false;
-		if (g.ship_y <= SCREEN_HEIGHT)
+		if (g.ship_y <= SCREEN_HEIGHT - 64)
 			g.ship_y += SHIP_SPEED;
-		if (g.ship_y > SCREEN_HEIGHT) g.ship_y = SCREEN_HEIGHT;
+		if (g.ship_y > SCREEN_HEIGHT - 64) g.ship_y = SCREEN_HEIGHT - 64;
 	}
 	while (g.left){
 		g.left = false;
@@ -189,9 +193,9 @@ void MoveStuff()
 	}
 	while (g.right){
 		g.right = false;
-		if (g.ship_x <= SCREEN_WIDTH)
+		if (g.ship_x <= SCREEN_WIDTH - 64)
 			g.ship_x += SHIP_SPEED;
-		if (g.ship_x > SCREEN_WIDTH) g.ship_x = SCREEN_WIDTH;
+		if (g.ship_x > SCREEN_WIDTH - 64) g.ship_x = SCREEN_WIDTH - 64;
 	}
 
 	if(g.fire)
@@ -207,12 +211,33 @@ void MoveStuff()
 		g.shots[g.last_shot].y = g.ship_y;
 		g.last_shot++;
 	}
+	if (g.missilfire)
+	{
+		g.missilfire = false;
+		Mix_PlayChannel(1, g.laserfx, 0);
+
+		if (g.last_shot == NUM_SHOTS)
+			g.last_shot = 0;
+
+		g.mshots[g.last_shot].alive = true;
+		g.mshots[g.last_shot].x = g.ship_x + 32;
+		g.mshots[g.last_shot].y = g.ship_y;
+		g.last_shot++;
+	}
+
 
 	for(int i = 0; i < NUM_SHOTS; ++i)
 	{
-		if(g.shots[i].alive)
+		if(g.mshots[i].alive)
 		{
-			if(g.shots[i].x < SCREEN_WIDTH)
+			if(g.mshots[i].x < SCREEN_WIDTH)
+				g.mshots[i].x += SHOT_SPEED;
+			else
+				g.mshots[i].alive = false;
+		}
+		if (g.shots[i].alive)
+		{
+			if (g.shots[i].x < SCREEN_WIDTH)
 				g.shots[i].x += SHOT_SPEED;
 			else
 				g.shots[i].alive = false;
@@ -227,6 +252,7 @@ void Draw()
 	SDL_RenderClear(g.renderer);
 
 	SDL_Rect target;
+	SDL_Rect sprite;
 
 	// Draw the background and scroll --
 	// TODO 9: scroll the background
@@ -264,6 +290,28 @@ void Draw()
 			target.x = g.shots[i].x;
 			target.y = g.shots[i].y;
 			SDL_RenderCopy(g.renderer, g.shot, NULL, &target);
+		}
+	}
+
+	// Draw missil --
+	//Position in the sprite
+	sprite.x = 64;
+	sprite.y = 224;
+	sprite.w = 32;
+	sprite.h = 32;
+
+	target.w = 64;
+	target.h = 64;
+
+	SDL_RendererFlip flip = SDL_FLIP_HORIZONTAL;
+
+	for (int i = 0; i < NUM_SHOTS; ++i)
+	{
+		if (g.mshots[i].alive)
+		{
+			target.x = g.mshots[i].x;
+			target.y = g.mshots[i].y;
+			SDL_RenderCopyEx(g.renderer, g.missil, &sprite, &target, 0.0, NULL, flip);
 		}
 	}
 
