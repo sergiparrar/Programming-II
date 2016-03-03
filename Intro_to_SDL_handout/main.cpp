@@ -183,11 +183,15 @@ void MoveStuff()
 	}
 	while (g.left){
 		g.left = false;
-		g.ship_x -= SHIP_SPEED;
+		if (g.ship_x >= 0)
+			g.ship_x -= SHIP_SPEED;
+		if (g.ship_x < 0) g.ship_x = 0;
 	}
 	while (g.right){
 		g.right = false;
-		g.ship_x += SHIP_SPEED;
+		if (g.ship_x <= SCREEN_WIDTH)
+			g.ship_x += SHIP_SPEED;
+		if (g.ship_x > SCREEN_WIDTH) g.ship_x = SCREEN_WIDTH;
 	}
 
 	if(g.fire)
