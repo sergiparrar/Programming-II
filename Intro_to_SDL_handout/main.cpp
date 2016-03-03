@@ -28,6 +28,7 @@
 #define NUM_SHOTS 32
 #define SHOT_SPEED 5
 #define MAX_KEYS 300
+#define SPRITE_SIZE 32
 
 enum KEY_STATE
 {
@@ -295,10 +296,10 @@ void Draw()
 
 	// Draw missil --
 	//Position in the sprite
-	sprite.x = 64;
-	sprite.y = 224;
-	sprite.w = 32;
-	sprite.h = 32;
+	sprite.x = SPRITE_SIZE * 2;
+	sprite.y = SPRITE_SIZE * 7;
+	sprite.w = SPRITE_SIZE;
+	sprite.h = SPRITE_SIZE;
 
 	target.w = 64;
 	target.h = 64;
@@ -311,7 +312,7 @@ void Draw()
 		{
 			target.x = g.mshots[i].x;
 			target.y = g.mshots[i].y;
-			SDL_RenderCopyEx(g.renderer, g.missil, &sprite, &target, 0.0, NULL, flip);
+			SDL_RenderCopyEx(g.renderer, g.missil, &sprite, &target, NULL, NULL, flip);
 		}
 	}
 
