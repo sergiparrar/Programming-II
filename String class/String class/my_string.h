@@ -41,9 +41,9 @@ public:
 		return local_str;
 	}
 
-	bool operator == (const mstring cstr)
+	bool operator == (const mstring rightstr)
 	{
-		return strcmp(local_str, cstr.c_str());
+		return strcmp(local_str, rightstr.c_str()) == 0;
 	}
 	
 
