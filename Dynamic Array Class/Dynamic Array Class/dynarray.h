@@ -37,12 +37,7 @@ public:
 		_buffer = (T*)malloc(sizeof(T)* _capacity);
 		_size = reference.size();
 
-		T* buffer = _buffer;
-		for (int i = 0; i < _size; ++i)
-		{
-			*buffer = reference[i];
-			buffer++;
-		}
+		memcpy(_buffer, &reference[0], sizeof(T) * _capacity);
 	}
 
 	~DynArray()
