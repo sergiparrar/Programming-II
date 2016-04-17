@@ -16,6 +16,8 @@ int main()
 	myarray.push_back(3);
 	myarray.push_back(4);
 
+	darray<int> copyarray = myarray;
+
 	myarray.insert(5, 5, 12);
 
 	for (int i = 0; i < myarray.size(); i++)
@@ -29,6 +31,12 @@ int main()
 		myarray.pop_back();
 
 	printf("\nSize: %d\nCapacity: %d\n", myarray.size(), myarray.capacity());
+
+	printf("Copyarray:\n");
+	for (int i = 0; i < copyarray.size(); i++)
+	{
+		printf("%d\n", copyarray[i]);
+	}
 
 	getchar();
 	return 0;
